@@ -10,10 +10,9 @@ document.querySelector('.score').textContent = 10;
 document.querySelector('.guess').value = 23;
 console.log(document.querySelector('.guess').value);*/
 
-const secretNumber = Math.trunc(Math.random() * 20 + 1);
-let score = 20;
-
-document.querySelector('.number').textContent = secretNumber;
+let secretNumber = Math.trunc(Math.random() * 20 + 1),
+  score = 20,
+  highScore = 0;
 
 document.querySelector('.check').addEventListener('click', function () {
   const guess = Number(document.querySelector('.guess').value);
@@ -26,10 +25,16 @@ document.querySelector('.check').addEventListener('click', function () {
     // When player wins
   } else if (guess === secretNumber) {
     document.querySelector('.message').textContent = `🎉Correct Number!`;
+    document.querySelector('.number').textContent = secretNumber;
 
     document.querySelector('body').style.backgroundColor = '#60b347';
 
     document.querySelector('.number').style.width = '30rem';
+
+    if (score > highScore) {
+      highScore = score;
+      document.querySelector('.highscore').textContent = highScore;
+    }
 
     // When guess is too high
   } else if (guess > secretNumber) {
@@ -53,4 +58,20 @@ document.querySelector('.check').addEventListener('click', function () {
       document.querySelector('.score').textContent = 0;
     }
   }
+});
+
+// Click event for Again button
+document.querySelector('.again').addEventListener('click', function () {
+  // Initializing 'score' and 'secretNumber' variables
+  (secretNumber = Math.trunc(Math.random() * 20 + 1)), (score = 20);
+
+  // Restoring the initial message, number, score and guess input fields
+  document.querySelector('.message').textContent = `Start guessing...`;
+  document.querySelector('.number').textContent = '?';
+  document.querySelector('.score').textContent = score;
+  document.querySelector('.guess').value = '';
+
+  // Restoring original background color and number width
+  document.querySelector('body').style.backgroundColor = '#222';
+  document.querySelector('.number').style.width = '15rem';
 });
